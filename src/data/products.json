@@ -1,0 +1,522 @@
+[
+    {
+        "id": 1,
+        "code": "1",
+        "status": true,
+        "title": "Esmaltes mate para cerámica",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte apto para pintar cerámicas con acabado mate. Diversos colores.",
+        "price": 160,
+        "stock": 5,
+        "thumbnails": [
+            "./public/imagenes/producto_1.png"
+        ]
+    },
+    {
+        "id": 2,
+        "code": "2",
+        "status": true,
+        "title": "Pigmento mate para cerámica",
+        "category": "EsmaltesyPigmentos",
+        "description": "Pigmento apto para pintar cerámica. Diversos colores.",
+        "price": 200,
+        "stock": 4,
+        "thumbnails": [
+            "./public/imagenes/producto_2.png"
+        ]
+    },
+    {
+        "id": 3,
+        "code": "3",
+        "status": true,
+        "title": "Set pigmentos pastel para cerámica",
+        "category": "EsmaltesyPigmentos",
+        "description": "Pigmentos para cerámica en tonos pastel.",
+        "price": 1300,
+        "stock": 7,
+        "thumbnails": [
+            "./public/imagenes/producto_3.jpg"
+        ]
+    },
+    {
+        "id": 4,
+        "code": "4",
+        "status": true,
+        "title": "Esmalte brillante para cerámica",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte para cerámica de acabado brillante de baja opacidad. Diversos colores.",
+        "price": 250,
+        "stock": 10,
+        "thumbnails": [
+            "./public/imagenes/producto_4.png"
+        ]
+    },
+    {
+        "id": 5,
+        "code": "5",
+        "status": true,
+        "title": "Esmalte brillante para cerámica",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte para cerámica de acabado brillante en diversos colores.",
+        "price": 300,
+        "stock": 5,
+        "thumbnails": [
+            "./public/imagenes/producto_5.png"
+        ]
+    },
+    {
+        "id": 6,
+        "code": "6",
+        "status": true,
+        "title": "Esmaltes TP para cerámica",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmaltes marca TP para cerámica. Diversos colores.",
+        "price": 480,
+        "stock": 13,
+        "thumbnails": [
+            "./public/imagenes/producto_6.png"
+        ]
+    },
+    {
+        "id": 7,
+        "code": "7",
+        "status": true,
+        "title": "Set de 24 pigmentos para cerámica",
+        "category": "EsmaltesyPigmentos",
+        "description": "Set que contiene 24 pigmentos aptos para cerámica.",
+        "price": 2500,
+        "stock": 2,
+        "thumbnails": [
+            "./public/imagenes/producto_7.png"
+        ]
+    },
+    {
+        "id": 8,
+        "code": "8",
+        "status": true,
+        "title": "Esmaltes para cerámica",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmaltes para pintar cérmica, diversos colores.",
+        "price": 150,
+        "stock": 15,
+        "thumbnails": [
+            "./public/imagenes/producto_8.png"
+        ]
+    },
+    {
+        "id": 9,
+        "code": "9",
+        "status": true,
+        "title": "Rodillo para cortar cerámica",
+        "category": "Herramientas",
+        "description": "Rodillo para cortar láminas de cerámica.",
+        "price": 2500,
+        "stock": 7,
+        "thumbnails": [
+            "./public/imagenes/producto_9.png"
+        ]
+    },
+    {
+        "id": 10,
+        "code": "10",
+        "status": true,
+        "title": "Desbastador de cerámica",
+        "category": "Herramientas",
+        "description": "Desbastadores de distintas formas para cerámica.",
+        "price": 150,
+        "stock": 1,
+        "thumbnails": [
+            "./public/imagenes/producto_10.png"
+        ]
+    },
+    {
+        "id": 11,
+        "code": "11",
+        "status": true,
+        "title": "Sello para cerámica con forma de hoja",
+        "category": "Herramientas",
+        "description": "Sello para dar textura de hoja a las cerámica.",
+        "price": 350,
+        "stock": 9,
+        "thumbnails": [
+            "./public/imagenes/producto_11.jpg"
+        ]
+    },
+    {
+        "id": 12,
+        "code": "12",
+        "status": true,
+        "title": "Set de cortantes con forma de corazón",
+        "category": "Herramientas",
+        "description": "Set de cortantes para cerámica con forma de corazón, diversos tamaños y formas.",
+        "price": 800,
+        "stock": 2,
+        "thumbnails": [
+            "./public/imagenes/producto_12.png"
+        ]
+    },
+    {
+        "id": 13,
+        "code": "13",
+        "status": true,
+        "title": "Rodillo texturizador, forma de triángulos",
+        "category": "Herramientas",
+        "description": "Rodillo para aportar textura a la cerámica, con forma de triangulo.",
+        "price": 300,
+        "stock": 15,
+        "thumbnails": [
+            "./public/imagenes/producto_13.png"
+        ]
+    },
+    {
+        "id": 14,
+        "code": "14",
+        "status": true,
+        "title": "Set cortantes pequeños para cerámica",
+        "category": "Herramientas",
+        "description": "Set de cortantes pequeños para cerámica con diversos tamaños.",
+        "price": 870,
+        "stock": 6,
+        "thumbnails": [
+            "./public/imagenes/producto_14.png"
+        ]
+    },
+    {
+        "id": 15,
+        "code": "15",
+        "status": true,
+        "title": "Set de 6 rodillos con distintas texturas",
+        "category": "Herramientas",
+        "description": "Set de 6 rodillos para aportar textura a la cerámica, motivos variados.",
+        "price": 1500,
+        "stock": 4,
+        "thumbnails": [
+            "./public/imagenes/producto_15.jpg"
+        ]
+    },
+    {
+        "id": 16,
+        "code": "16",
+        "status": true,
+        "title": "Raspadores de metal para cerámica",
+        "category": "Herramientas",
+        "description": "Raspadores de metal para cerámica, con diversas formas.",
+        "price": 500,
+        "stock": 3,
+        "thumbnails": [
+            "./public/imagenes/producto_16.jpg"
+        ]
+    },
+    {
+        "id": 17,
+        "code": "17",
+        "status": true,
+        "title": "Bandeja de cerámica en forma de hoja",
+        "category": "Decoracion",
+        "description": "Bandejas con forma de hoja para decorar o contener pequeños elementos.",
+        "price": 620,
+        "stock": 1,
+        "thumbnails": [
+            "./public/imagenes/producto_17.png"
+        ]
+    },
+    {
+        "id": 18,
+        "code": "18",
+        "status": true,
+        "title": "Candelabro con varios colores",
+        "category": "Decoracion",
+        "description": "Candelabro para 1 vela con diversos colores y motivos.",
+        "price": 780,
+        "stock": 3,
+        "thumbnails": [
+            "./public/imagenes/producto_18.png"
+        ]
+    },
+    {
+        "id": 19,
+        "code": "19",
+        "status": true,
+        "title": "Set de Decoración de pared en gris y blanco",
+        "category": "Decoracion",
+        "description": "Decoración de pared de cerámica con forma de medusas en diversos tonos de gris.",
+        "price": 1350,
+        "stock": 1,
+        "thumbnails": [
+            "./public/imagenes/producto_19.png"
+        ]
+    },
+    {
+        "id": 20,
+        "code": "20",
+        "status": true,
+        "title": "Set de floreros de cerámica con forma de libros",
+        "category": "Decoracion",
+        "description": "Set de floreros de cerámica con forma de libros. Diversos colores.",
+        "price": 1500,
+        "stock": 4,
+        "thumbnails": [
+            "./public/imagenes/producto_20.png"
+        ]
+    },
+    {
+        "id": 21,
+        "code": "21",
+        "status": true,
+        "title": "Esmalte azul para cerámica",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte azul para cerámica con acabado brillante.",
+        "price": 300,
+        "stock": 10,
+        "thumbnails": [
+            "./public/imagenes/producto_21.png"
+        ]
+    },
+    {
+        "id": 22,
+        "code": "22",
+        "status": true,
+        "title": "Pigmento negro para cerámica",
+        "category": "EsmaltesyPigmentos",
+        "description": "Pigmento negro para cerámica, alta concentración.",
+        "price": 200,
+        "stock": 8,
+        "thumbnails": [
+            "./public/imagenes/producto_22.png"
+        ]
+    },
+    {
+        "id": 23,
+        "code": "23",
+        "status": true,
+        "title": "Esmalte verde oliva para cerámica",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte verde oliva para cerámica con acabado mate.",
+        "price": 250,
+        "stock": 6,
+        "thumbnails": [
+            "./public/imagenes/producto_23.png"
+        ]
+    },
+    {
+        "id": 24,
+        "code": "24",
+        "status": true,
+        "title": "Pigmento rojo cerámico",
+        "category": "EsmaltesyPigmentos",
+        "description": "Pigmento rojo para cerámica de alta calidad.",
+        "price": 220,
+        "stock": 9,
+        "thumbnails": [
+            "./public/imagenes/producto_24.png"
+        ]
+    },
+    {
+        "id": 25,
+        "code": "25",
+        "status": true,
+        "title": "Set de 12 esmaltes colores pastel",
+        "category": "EsmaltesyPigmentos",
+        "description": "Set de 12 esmaltes en colores pastel para cerámica.",
+        "price": 1300,
+        "stock": 5,
+        "thumbnails": [
+            "./public/imagenes/producto_25.png"
+        ]
+    },
+    {
+        "id": 26,
+        "code": "26",
+        "status": true,
+        "title": "Esmalte blanco mate",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte blanco mate ideal para cerámica.",
+        "price": 180,
+        "stock": 12,
+        "thumbnails": [
+            "./public/imagenes/producto_26.png"
+        ]
+    },
+    {
+        "id": 27,
+        "code": "27",
+        "status": true,
+        "title": "Pigmento azul marino",
+        "category": "EsmaltesyPigmentos",
+        "description": "Pigmento azul marino para cerámica.",
+        "price": 210,
+        "stock": 7,
+        "thumbnails": [
+            "./public/imagenes/producto_27.png"
+        ]
+    },
+    {
+        "id": 28,
+        "code": "28",
+        "status": true,
+        "title": "Esmalte dorado brillante",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte dorado brillante para cerámica.",
+        "price": 350,
+        "stock": 4,
+        "thumbnails": [
+            "./public/imagenes/producto_28.png"
+        ]
+    },
+    {
+        "id": 29,
+        "code": "29",
+        "status": true,
+        "title": "Esmalte gris perla",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte gris perla con acabado mate.",
+        "price": 230,
+        "stock": 11,
+        "thumbnails": [
+            "./public/imagenes/producto_29.png"
+        ]
+    },
+    {
+        "id": 30,
+        "code": "30",
+        "status": true,
+        "title": "Esmalte terracota",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte color terracota para cerámica.",
+        "price": 270,
+        "stock": 8,
+        "thumbnails": [
+            "./public/imagenes/producto_30.png"
+        ]
+    },
+    {
+        "id": 31,
+        "code": "31",
+        "status": true,
+        "title": "Set de 6 esmaltes mate colores variados",
+        "category": "EsmaltesyPigmentos",
+        "description": "Set de 6 esmaltes mate en colores variados para cerámica.",
+        "price": 900,
+        "stock": 5,
+        "thumbnails": [
+            "./public/imagenes/producto_31.png"
+        ]
+    },
+    {
+        "id": 32,
+        "code": "32",
+        "status": true,
+        "title": "Esmalte rosa pastel",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte rosa pastel para cerámica.",
+        "price": 250,
+        "stock": 9,
+        "thumbnails": [
+            "./public/imagenes/producto_32.png"
+        ]
+    },
+    {
+        "id": 33,
+        "code": "33",
+        "status": true,
+        "title": "Pigmento marrón oscuro",
+        "category": "EsmaltesyPigmentos",
+        "description": "Pigmento marrón oscuro para cerámica.",
+        "price": 240,
+        "stock": 6,
+        "thumbnails": [
+            "./public/imagenes/producto_33.png"
+        ]
+    },
+    {
+        "id": 34,
+        "code": "34",
+        "status": true,
+        "title": "Esmalte celeste",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte celeste para cerámica con acabado brillante.",
+        "price": 280,
+        "stock": 10,
+        "thumbnails": [
+            "./public/imagenes/producto_34.png"
+        ]
+    },
+    {
+        "id": 35,
+        "code": "35",
+        "status": true,
+        "title": "Esmalte marrón claro",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte marrón claro para cerámica.",
+        "price": 260,
+        "stock": 7,
+        "thumbnails": [
+            "./public/imagenes/producto_35.png"
+        ]
+    },
+    {
+        "id": 36,
+        "code": "36",
+        "status": true,
+        "title": "Set de 5 esmaltes transparentes",
+        "category": "EsmaltesyPigmentos",
+        "description": "Set de 5 esmaltes transparentes para cerámica.",
+        "price": 1100,
+        "stock": 4,
+        "thumbnails": [
+            "./public/imagenes/producto_36.png"
+        ]
+    },
+    {
+        "id": 37,
+        "code": "37",
+        "status": true,
+        "title": "Pigmento gris oscuro",
+        "category": "EsmaltesyPigmentos",
+        "description": "Pigmento gris oscuro para cerámica.",
+        "price": 200,
+        "stock": 12,
+        "thumbnails": [
+            "./public/imagenes/producto_37.png"
+        ]
+    },
+    {
+        "id": 38,
+        "code": "38",
+        "status": true,
+        "title": "Esmalte naranja brillante",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte naranja brillante para cerámica.",
+        "price": 290,
+        "stock": 8,
+        "thumbnails": [
+            "./public/imagenes/producto_38.png"
+        ]
+    },
+    {
+        "id": 39,
+        "code": "39",
+        "status": true,
+        "title": "Esmalte púrpura",
+        "category": "EsmaltesyPigmentos",
+        "description": "Esmalte púrpura para cerámica.",
+        "price": 320,
+        "stock": 6,
+        "thumbnails": [
+            "./public/imagenes/producto_39.png"
+        ]
+    },
+    {
+        "id": 40,
+        "code": "40",
+        "status": true,
+        "title": "Pigmento verde esmeralda",
+        "category": "EsmaltesyPigmentos",
+        "description": "Pigmento verde esmeralda para cerámica.",
+        "price": 270,
+        "stock": 11,
+        "thumbnails": [
+            "./public/imagenes/producto_40.png"
+        ]
+    }
+]
