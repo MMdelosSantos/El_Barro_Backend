@@ -24,3 +24,5 @@ cartRouter.delete('/:pid', async(req, res) => {
     
 }) // VER COMO SE BORRA
 module.exports = cartRouter;
+
+// MIN 35 DWE CLASE REPASO

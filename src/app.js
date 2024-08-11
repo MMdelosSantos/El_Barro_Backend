@@ -1,12 +1,12 @@
 // Importo router y otros
 const productsRouter = require('./routes/products.router.js');
 const cartRouter = require('./routes/cart.router.js');
-const productsmanager = require("./dao/productsManager.js");
+const ProductsManager = require('./dao/ProductsManager.js');
 
 // Importando express js
 
 const express = require('express');
-//const productsmanager = require('./dao/productsmanager.js');
+
 
 const app = express();
 
@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-//productsmanager.path="./dao/productsmanager.js"
+ProductsManager.path="./src/data/products.json"
 
 // Creando el servidor 
 const PORT=8080
