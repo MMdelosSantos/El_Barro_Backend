@@ -1,14 +1,13 @@
 const { Router } = require('express');
 // Importo products
-let { products } = require("../data/products.js")
-const productsManager = require("../dao/productsManager.js")
+const ProductsManager = require("../dao/ProductsManager.js")
 
 const productsRouter = Router()
 
 // Get en ruta raiz
 productsRouter.get('/', async (req, res) => {
 
-    // let products=await productsManager.getProducts()
+    let products = await ProductsManager.getProducts()
 
     let { limit, skip } = req.query
     if (limit) {
@@ -33,7 +32,7 @@ productsRouter.get('/', async (req, res) => {
 
     let resultado = products.slice(skip, skip + limit)
     res.setHeader('Content-Type', 'application/json')
-            return res.status(200).json(resultado)
+    return res.status(200).json(resultado)
 })
 
 // Get en un producto con id especifica
@@ -45,7 +44,7 @@ productsRouter.get('/:pid', async (req, res) => {
         return res.status(400).json({ error: `El id debe ser numérico` })
     }
 
-    // let products=await productsManager.getProducts()
+    let products = await ProductsManager.getProducts()
 
     let product = products.find(p => p.id === pid)
     console.log(product)
@@ -57,32 +56,27 @@ productsRouter.get('/:pid', async (req, res) => {
     res.send(product)
 })
 
-productsRouter.post('/', async(req, res) => {
-    // let newProduct= "Crea un nuevo producto"
-    let product = req.body;
-    if (!product.title || !product.description || !product.code || !product.price || !product.status || !product.stock || !product.category) {
+productsRouter.post('/', async (req, res) => {
+    let { title, description, code, price, status, stock, category, thumbnails } = req.body
+
+    if (!title || !description || !code || !price || !status || !stock || !category) {
         res.setHeader('Content-Type', 'application/json')
         return res.status(400).json({ error: `Valores incompletos` })
     }
-    if (typeof product.title !== "string" || typeof product.description !== "string" || typeof product.code !== "string" || typeof product.category !== "string") {
+    try {
+        let newProduct = await ProductsManager.create({ title, description, code, price, status, stock, category, thumbnails })
         res.setHeader('Content-Type', 'application/json')
-        return res.status(400).json({ error: `El title, description, category y code deben estar en formato string` })
+        return res.status(201).json(newProduct)
+    } catch (error) {
+        console.log(error);
+        res.setHeader('Content-Type', 'application/json')
+        return res.status(500).json({
+            Error: `Error inesperado en el servidor. Por favor intente más tarde`,
+            detalle: `${error.message}`
+        })
     }
-    if (typeof product.price !== "number" || typeof product.stock !== "number") {
-        res.setHeader('Content-Type', 'application/json')
-        return res.status(400).json({ error: `El price y el stock deben estar en formato number` })
-    }
-    if (typeof product.status !== "boolean" || product.status == false) {
-        res.setHeader('Content-Type', 'application/json')
-        return res.status(400).json({ error: `El status debe ser un booleano true` })
-    }
-    if (product.price < 0 || product.stock <= 0) {
-        res.setHeader('Content-Type', 'application/json')
-        return res.status(400).json({ error: `El price debe ser mayor a 0 y el stock debe ser igual o mayor a 0` })
-        }
-    products.push(product)
-    res.setHeader('Content-Type', 'application/json')
-            return res.status(201).json({product})
+
+
 }) // VER COMO HACER EL ID INCREMENTAL
 
 productsRouter.put('/:pid', (req, res) => {
@@ -110,8 +104,8 @@ productsRouter.put('/:pid', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
     res.setHeader('Content-Type', 'application/json')
-    return res.status(200).json({Message: `Producto con id: ${pid} modificado`})
-    
+    return res.status(200).json({ Message: `Producto con id: ${pid} modificado` })
+
 
 }) // VER LOS CAMPOS A INCORPORAR 
 
@@ -123,4 +117,3 @@ productsRouter.delete('/:pid', (req, res) => {
 
 module.exports = productsRouter;
 
-// MIN 30 DE CLASE 8
