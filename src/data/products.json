@@ -544,5 +544,31 @@
           "thumbnails": [
                "./public/imagenes/producto_1.png"
           ]
+     },
+     {
+          "id": 43,
+          "title": "Esmaltes  para cerámica",
+          "description": "Esmalte mate. Diversos colores.",
+          "code": "8900",
+          "price": 8,
+          "status": true,
+          "stock": 5,
+          "category": "EsmaltesyPigmentos",
+          "thumbnails": [
+               "./public/imagenes/producto_1.png"
+          ]
+     },
+     {
+          "id": 44,
+          "title": "Esmaltes  para cerámica",
+          "description": "Esmalte mate. Diversos colores.",
+          "code": "8901",
+          "price": 8,
+          "status": true,
+          "stock": 5,
+          "category": "EsmaltesyPigmentos",
+          "thumbnails": [
+               "./public/imagenes/producto_1.png"
+          ]
      }
 ]

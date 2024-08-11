@@ -4,7 +4,7 @@ const ProductsManager = require("../dao/ProductsManager.js")
 
 const productsRouter = Router()
 
-// Get en ruta raiz
+// Get en ruta raiz RECORDAR PPONER ELL TRY CATCH
 productsRouter.get('/', async (req, res) => {
 
     let products = await ProductsManager.getProducts()
@@ -35,7 +35,7 @@ productsRouter.get('/', async (req, res) => {
     return res.status(200).json(resultado)
 })
 
-// Get en un producto con id especifica
+// Get en un producto con id especificO
 productsRouter.get('/:pid', async (req, res) => {
     let { pid } = req.params
     pid = Number(pid)
@@ -75,9 +75,7 @@ productsRouter.post('/', async (req, res) => {
             detalle: `${error.message}`
         })
     }
-
-
-}) // VER COMO HACER EL ID INCREMENTAL
+}) 
 
 productsRouter.put('/:pid', (req, res) => {
     let { title: titleBody } = req.body;
