@@ -1,61 +1,80 @@
 const { Router } = require('express');
+
 // Importo products
 const ProductsManager = require("../dao/ProductsManager.js")
 
 const productsRouter = Router()
 
-// Get en ruta raiz RECORDAR PPONER ELL TRY CATCH
+// Get en ruta raiz
 productsRouter.get('/', async (req, res) => {
+    try {
+        let products = await ProductsManager.getProducts()
 
-    let products = await ProductsManager.getProducts()
-
-    let { limit, skip } = req.query
-    if (limit) {
-        limit = Number(limit)
-        if (isNaN(limit)) {
-            res.setHeader('Content-Type', 'application/json')
-            return res.status(400).json({ error: `El argumento limit debe ser de tipo número` })
+        let { limit, skip } = req.query
+        if (limit) {
+            limit = Number(limit)
+            if (isNaN(limit)) {
+                res.setHeader('Content-Type', 'application/json')
+                return res.status(400).json({ error: `El argumento limit debe ser de tipo número` })
+            }
+        } else {
+            limit = products.length
         }
-    } else {
-        limit = products.length
-    }
 
-    if (skip) {
-        skip = Number(skip)
-        if (isNaN(skip)) {
-            res.setHeader('Content-Type', 'application/json')
-            return res.status(400).json({ error: `El argumento skip debe ser de tipo número` })
+        if (skip) {
+            skip = Number(skip)
+            if (isNaN(skip)) {
+                res.setHeader('Content-Type', 'application/json')
+                return res.status(400).json({ error: `El argumento skip debe ser de tipo número` })
+            }
+        } else {
+            skip = 0
         }
-    } else {
-        skip = 0
-    }
 
-    let resultado = products.slice(skip, skip + limit)
-    res.setHeader('Content-Type', 'application/json')
-    return res.status(200).json(resultado)
-})
+        let resultado = products.slice(skip, skip + limit)
+        res.setHeader('Content-Type', 'application/json')
+        return res.status(200).json(resultado)
+    } catch (error) {
+        console.log(error);
+        res.setHeader('Content-Type', 'application/json')
+        return res.status(500).json({
+            Error: `Error inesperado en el servidor. Por favor intente más tarde`,
+            detalle: `${error.message}`
+        })
+    }
+});
 
 // Get en un producto con id especificO
 productsRouter.get('/:pid', async (req, res) => {
-    let { pid } = req.params
-    pid = Number(pid)
-    if (isNaN(pid)) {
+    try {
+        let { pid } = req.params
+        pid = Number(pid)
+        if (isNaN(pid)) {
+            res.setHeader('Content-Type', 'application/json')
+            return res.status(400).json({ error: `El id debe ser numérico` })
+        }
+
+        let products = await ProductsManager.getProducts()
+
+        let product = products.find(p => p.id === pid)
+        console.log(product)
+        if (!product) {
+            res.setHeader('Content-Type', 'application/json')
+            return res.status(400).json({ error: `No se encontró producto con el id ${pid}` })
+        }
         res.setHeader('Content-Type', 'application/json')
-        return res.status(400).json({ error: `El id debe ser numérico` })
-    }
-
-    let products = await ProductsManager.getProducts()
-
-    let product = products.find(p => p.id === pid)
-    console.log(product)
-    if (!product) {
+        return res.status(200).json(product)
+    } catch (error) {
+        console.log(error);
         res.setHeader('Content-Type', 'application/json')
-        return res.status(400).json({ error: `No se encontró producto con el id ${pid}` })
+        return res.status(500).json({
+            Error: `Error inesperado en el servidor. Por favor intente más tarde`,
+            detalle: `${error.message}`
+        })
     }
+});
 
-    res.send(product)
-})
-
+// Método para crear un producto nuevo
 productsRouter.post('/', async (req, res) => {
     let { title, description, code, price, status, stock, category, thumbnails } = req.body
 
@@ -66,7 +85,7 @@ productsRouter.post('/', async (req, res) => {
     try {
         let newProduct = await ProductsManager.create({ title, description, code, price, status, stock, category, thumbnails })
         res.setHeader('Content-Type', 'application/json')
-        return res.status(201).json(newProduct)
+        return res.status(201).json({ Message: `Producto con code ${code} creado correctamente`, newProduct })
     } catch (error) {
         console.log(error);
         res.setHeader('Content-Type', 'application/json')
@@ -75,43 +94,66 @@ productsRouter.post('/', async (req, res) => {
             detalle: `${error.message}`
         })
     }
-}) 
+})
 
-productsRouter.put('/:pid', (req, res) => {
-    let { title: titleBody } = req.body;
-    let { description: descriptionBody } = req.body;
-    let { code: codeBody } = req.body;
-    let { price: priceBody } = req.body;
-    let { status: statusBody } = req.body;
-    let { stock: stockBody } = req.body;
-    let { category: categoryBody } = req.body;
+// Método para modificar un producto
+productsRouter.put('/:pid', async (req, res) => {
+    try {
+        let { pid } = req.params
+        pid = Number(pid)
+        if (isNaN(pid)) {
+            res.setHeader('Content-Type', 'application/json')
+            return res.status(400).json({ error: 'El id debe ser numérico' })
+        }
 
-    if (!titleBody) {
-        res.setHeader('Content-Type', 'application/json');
-        return res.status(400).json({ error: `Complete el title` })
+        let updates = req.body
+        if (Object.keys(updates).length === 0) {
+            res.setHeader('Content-Type', 'application/json')
+            return res.status(400).json({ error: 'No se han proporcionado datos para actualizar' })
+        }
+
+        if ('id' in updates) {
+            return res.status(400).json({ error: 'El campo id no puede ser modificado' })
+        }
+
+        let updatedProduct = await ProductsManager.update(pid, updates)
+
+        res.setHeader('Content-Type', 'application/json')
+        return res.status(200).json({ message: `Producto con id ${pid} modificado correctamente`, product: updatedProduct })
+    } catch (error) {
+        console.log(error)
+        res.setHeader('Content-Type', 'application/json')
+        return res.status(500).json({
+            Error: 'Error inesperado en el servidor. Por favor intente más tarde',
+            detalle: error.message
+        })
     }
-    title = `${titleBody}`.trim()
+})
 
-    if (!descriptionBody) {
+// Método para borrar un producto 
+productsRouter.delete('/:pid', async (req, res) => {
+    try {
+        let { pid } = req.params;
+        pid = Number(pid);
+
+        if (isNaN(pid)) {
+            res.setHeader('Content-Type', 'application/json');
+            return res.status(400).json({ error: 'El id debe ser numérico' });
+        }
+
+        let resultado = await ProductsManager.delete(pid);
         res.setHeader('Content-Type', 'application/json');
-        return res.status(400).json({ error: `Complete el description` })
+        return res.status(200).json(resultado);
+    } catch (error) {
+        console.log(error);
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(500).json({
+            Error: 'Error inesperado en el servidor. Por favor intente más tarde',
+            detalle: `${error.message}`
+        });
     }
-
-    description = `${descriptionBody}`.trim()
-
-    res.setHeader('Content-Type', 'application/json');
-
-    res.setHeader('Content-Type', 'application/json')
-    return res.status(200).json({ Message: `Producto con id: ${pid} modificado` })
-
-
-}) // VER LOS CAMPOS A INCORPORAR 
-
-productsRouter.delete('/:pid', (req, res) => {
-    id: ""
-
-}) // VER COMO SE BORRA
-
+});
 
 module.exports = productsRouter;
+
 
