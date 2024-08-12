@@ -494,19 +494,6 @@
           ]
      },
      {
-          "id": 39,
-          "code": "39",
-          "status": true,
-          "title": "Esmalte púrpura",
-          "category": "EsmaltesyPigmentos",
-          "description": "Esmalte púrpura para cerámica.",
-          "price": 320,
-          "stock": 6,
-          "thumbnails": [
-               "./public/imagenes/producto_39.png"
-          ]
-     },
-     {
           "id": 40,
           "code": "40",
           "status": true,
@@ -517,58 +504,6 @@
           "stock": 11,
           "thumbnails": [
                "./public/imagenes/producto_40.png"
-          ]
-     },
-     {
-          "id": 41,
-          "title": "Esmaltes mate para cerámica",
-          "description": "Esmalte apto para pintar cerámicas con acabado mate. Diversos colores.",
-          "code": "89",
-          "price": 8,
-          "status": true,
-          "stock": 5,
-          "category": "EsmaltesyPigmentos",
-          "thumbnails": [
-               "./public/imagenes/producto_1.png"
-          ]
-     },
-     {
-          "id": 42,
-          "title": "Esmaltes mate para cerámica",
-          "description": "Esmalte apto para pintar cerámicas con acabado mate. Diversos colores.",
-          "code": "890",
-          "price": 8,
-          "status": true,
-          "stock": 5,
-          "category": "EsmaltesyPigmentos",
-          "thumbnails": [
-               "./public/imagenes/producto_1.png"
-          ]
-     },
-     {
-          "id": 43,
-          "title": "Esmaltes  para cerámica",
-          "description": "Esmalte mate. Diversos colores.",
-          "code": "8900",
-          "price": 8,
-          "status": true,
-          "stock": 5,
-          "category": "EsmaltesyPigmentos",
-          "thumbnails": [
-               "./public/imagenes/producto_1.png"
-          ]
-     },
-     {
-          "id": 44,
-          "title": "Esmaltes  para cerámica",
-          "description": "Esmalte mate. Diversos colores.",
-          "code": "8901",
-          "price": 8,
-          "status": true,
-          "stock": 5,
-          "category": "EsmaltesyPigmentos",
-          "thumbnails": [
-               "./public/imagenes/producto_1.png"
           ]
      }
 ]
