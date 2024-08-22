@@ -1,0 +1,11 @@
+h1 {
+    color: rgb(255, 255, 255);
+    background-color: rgb(30, 176, 202);;
+}
+
+h3 {
+    color:rgb(241, 126, 189)
+}
+
+li { list-style-type: circle;
+}

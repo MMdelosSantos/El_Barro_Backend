@@ -13,21 +13,17 @@ class ProductsManager {
 
     static async create(product = {}) { // Método para crear un nuevo producto
 
-        const { title, description, code, price, status, stock, category } = product;
 
-        if (!title || !description || !code || !price || !status || !stock || !category) {
-            throw new Error("Los campos title, description, code,status, category,stock y price son obligatorios")
-        }
+        const { title, description, code, price, status= true, stock, category } = product;
+        if (!title || !description || !code || !price || !stock || !category) {
+            throw new Error("Los campos title, description, code, category,stock y price son obligatorios")}
 
         if (typeof title !== "string" || typeof description !== "string" || typeof code !== "string" || typeof category !== "string") {
             throw new Error("El title, description, category y code deben estar en formato string")
         }
         if (typeof price !== "number" || typeof stock !== "number") {
             throw new Error("El price y el stock deben estar en formato number")
-        }
-        if (typeof status !== "boolean" || status == false) {
-            throw new Error("El status debe ser un booleano true")
-        }
+        }        
         if (price < 0 || stock <= 0) {
             throw new Error("El price debe ser mayor a 0 y el stock debe ser igual o mayor a 0")
         }
