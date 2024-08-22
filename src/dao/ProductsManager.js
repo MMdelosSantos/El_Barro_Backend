@@ -13,10 +13,10 @@ class ProductsManager {
 
     static async create(product = {}) { // Método para crear un nuevo producto
 
+
         const { title, description, code, price, status= true, stock, category } = product;
         if (!title || !description || !code || !price || !stock || !category) {
-            throw new Error("Los campos title, description, code, category,stock y price son obligatorios")
-        }
+            throw new Error("Los campos title, description, code, category,stock y price son obligatorios")}
 
         if (typeof title !== "string" || typeof description !== "string" || typeof code !== "string" || typeof category !== "string") {
             throw new Error("El title, description, category y code deben estar en formato string")
@@ -34,14 +34,18 @@ class ProductsManager {
             throw new Error(`El producto con code: ${code} ya existe en la base de datos`)
         }
 
+
         // Generando el id para el producto nuevo
         let id = 1;
+
         if (products.length > 0) {
             id = Math.max(...products.map(d => d.id)) + 1
         }
         let newProduct = {
             id, ...product
+
         };
+
 
         products.push(newProduct)
         await fs.promises.writeFile(this.path, JSON.stringify(products, null, 5))
@@ -119,6 +123,7 @@ class ProductsManager {
         await fs.promises.writeFile(this.path, JSON.stringify(products, null, 5));
         return { message: `Producto con id ${id} eliminado correctamente` };
     }
+
 }
 
 module.exports = ProductsManager;
