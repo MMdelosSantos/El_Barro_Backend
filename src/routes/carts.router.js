@@ -8,13 +8,7 @@ const cartsRouter = Router()
 
 cartsRouter.post('/', async (req, res) => { // Método para generar un carrito nuevo
     try {
-        let { products } = req.body;
-
-        if (!Array.isArray(products)) {
-            return res.status(400).json({ error: 'El cuerpo de la solicitud debe contener un array de productos' });
-        }
-
-        let newCart = await CartsManager.create(products);
+        let newCart = await CartsManager.create();
         res.status(201).json({ message: 'Carrito creado correctamente', cart: newCart });
     } catch (error) {
         console.error(error);

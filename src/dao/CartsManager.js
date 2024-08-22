@@ -13,7 +13,7 @@ class CartsManager {
         }
     }
 
-    static async create(products = []) { // Método para generar un carrito nuvo
+    static async create() { // Método para generar un carrito nuvo
         let carts = await this.getCarts();
 
         let id = 1;
@@ -21,15 +21,9 @@ class CartsManager {
             id = Math.max(...carts.map(d => d.id)) + 1;
         }
 
-        products.forEach(p => {
-            if (!p.id || typeof p.quantity !== 'number' || p.quantity <= 0) {
-                throw new Error('Cada producto debe tener un productId válido y una cantidad mayor a 0');
-            }
-        });
-
         const newCart = {
             id: id,
-            products: products
+            products: []
         };
 
         carts.push(newCart);
@@ -39,7 +33,7 @@ class CartsManager {
     }
 
 
-    static async update(id, cart = {}) { // Método para incorporar un producto a un carrito // REVISAR
+    static async update(id, cart = {}) { // Método para incorporar un producto a un carrito 
         let carts = await this.get()
         let indexCart = carts.findIndex(c => c.d === id)
         if (indexCart === -1) {
