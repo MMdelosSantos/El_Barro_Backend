@@ -11,7 +11,7 @@
         productsList.innerHTML = '';
         products.forEach(product => {
             const li = document.createElement('li');
-            li.textContent = ` Code: ${product.code} - ${product.title}`;
+            li.textContent = ` Id: ${product.id} - Code: ${product.code} - Title: ${product.title}`;
             productsList.appendChild(li);
         });
     }

@@ -13,7 +13,7 @@ class CartsManager {
         }
     }
 
-    static async create() { // Método para generar un carrito nuvo
+    static async create() { // Método para generar un carrito nuevo
         let carts = await this.getCarts();
 
         let id = 1;

@@ -1,59 +1,48 @@
-// Importo router y managers
-const productsRouter = require('./routes/products.router.js');
-const cartsRouter = require('./routes/carts.router.js');
-const ProductsManager = require('./dao/ProductsManager.js');
-const CartsManager = require('./dao/CartsManager.js');
-const viewsRouter = require('./routes/views.router.js')
+const express = require('express');
 const { Server } = require('socket.io');
 const http = require('http');
 
-// Importando express js
+const productsRouter = require('./routes/products.router.js');
+const cartsRouter = require('./routes/carts.router.js');
+const viewsRouter = require('./routes/views.router.js');
 
-const express = require('express');
-
-// Importo handlebars
-const { engine } = require('express-handlebars');;
-
-const app = express();
-
-//Configurando para que interprete mensajes JSON
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-
-
-// Configuracion Handlebars
-app.engine("handlebars", engine())
-app.set("view engine", "handlebars")
-app.set("views","./src/views")
-
-// Creando los manager de products y carts
-
-//ProductsManager.path = "./src/data/products.json";
+const ProductsManager = require('./dao/ProductsManager.js');
+const CartsManager = require('./dao/CartsManager.js');
 CartsManager.path = "./src/data/carts.json";
 
-// Creando el puerto
-const PORT = 8080
+const app = express();
+const PORT = 8080;
+app.use(express.json());  // Para manejar datos en formato JSON
+app.use(express.urlencoded({ extended: true }));
 
-// Configurando el enrutamiento
-app.use("/api/products", productsRouter);
+// Configuración de Handlebars
+const { engine } = require('express-handlebars');
+app.engine("handlebars", engine());
+app.set("view engine", "handlebars");
+app.set("views","./src/views");
 
-app.use("/api/carts", cartsRouter);
-
-app.use("/", viewsRouter)
-
-// Contenido estatico 
-app.use(express.static("./src/public"))
-
-// Definiendo el puerto en el cual escucha
+// Configuración del servidor HTTP y WebSocket
 const serverHTTP = app.listen(PORT, () => console.log(`Escuchando en puerto ${PORT}`));
-
-// Configuración del servidor de WebSocket
 const io = new Server(serverHTTP);
 
+// Creación de la instancia de ProductsManager
 const productsManager = new ProductsManager(io);
-// Pasar la instancia de ProductsManager al router
-productsRouter.locals = { productsManager };
+
+// Middleware global para asignar productsManager a req
+app.use((req, res, next) => {
+    req.productsManager = productsManager;
+    next();
+});
+
+// Configuración de rutas
+app.use("/api/products", productsRouter);
+app.use("/api/carts", cartsRouter);
+app.use("/", viewsRouter);
+
+// Contenido estático
+app.use(express.static("./src/public"));
+
+// Configuración de WebSocket
 io.on('connection', (socket) => {
     console.log('Nuevo cliente WebSocket conectado');
 
@@ -64,13 +53,13 @@ io.on('connection', (socket) => {
     socket.on('addProduct', async (product) => {
         await productsManager.create(product);
         const products = await productsManager.getProducts();
-        io.emit('updateProducts', products); // Emitir a todos los clientes
+        io.emit('updateProducts', products);
     });
 
     socket.on('deleteProduct', async (id) => {
         await productsManager.delete(id);
         const products = await productsManager.getProducts();
-        io.emit('updateProducts', products); // Emitir a todos los clientes
+        io.emit('updateProducts', products);
     });
 
     socket.on('disconnect', () => {
