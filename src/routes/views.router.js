@@ -1,18 +1,17 @@
 const { Router } = require('express');
-const viewsRouter = Router()
-const ProductsManager = require('../dao/ProductsManager.js');
-ProductsManager.path = './src/data/products.json';
-
+const viewsRouter = Router();
 
 viewsRouter.get("/", async (req, res) => {
-    const products = await ProductsManager.getProducts();
+    const products = await req.productsManager.getProducts();
     res.setHeader('Content-Type', 'text/html');
-    res.status(200).render("home", {products})
-})
+    res.status(200).render("home", { products });
+});
 
-viewsRouter.get("/realtimeproducts", (req, res) => {
+viewsRouter.get("/realtimeproducts", async (req, res) => {
+    const products = await req.productsManager.getProducts();
+    console.log(products)
     res.setHeader('Content-Type', 'text/html');
-    res.status(200).render("realtimeproducts")
-})
+    res.status(200).render("realtimeproducts", { products });
+});
 
 module.exports = viewsRouter;

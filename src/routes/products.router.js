@@ -1,14 +1,10 @@
 const { Router } = require('express');
-
-// Importo products
-const ProductsManager = require("../dao/ProductsManager.js")
-
 const productsRouter = Router()
 
 // Get en ruta raiz
 productsRouter.get('/', async (req, res) => {
     try {
-        let products = await ProductsManager.getProducts()
+        let products = await req.productsManager.getProducts()
 
         let { limit, skip } = req.query
         if (limit) {
@@ -54,7 +50,7 @@ productsRouter.get('/:pid', async (req, res) => {
             return res.status(400).json({ error: `El id debe ser numérico` })
         }
 
-        let products = await ProductsManager.getProducts()
+        let products = await req.productsManager.getProducts()
 
         let product = products.find(p => p.id === pid)
         console.log(product)
@@ -76,14 +72,14 @@ productsRouter.get('/:pid', async (req, res) => {
 
 // Método para crear un producto nuevo
 productsRouter.post('/', async (req, res) => {
-    let { title, description, code, price, status, stock, category, thumbnails } = req.body
+    let { title, description, code, price, status=true, stock, category, thumbnails } = req.body
 
-    if (!title || !description || !code || !price || !status || !stock || !category) {
+    if (!title || !description || !code || !price || !stock || !category) {
         res.setHeader('Content-Type', 'application/json')
         return res.status(400).json({ error: `Valores incompletos` })
     }
     try {
-        let newProduct = await ProductsManager.create({ title, description, code, price, status, stock, category, thumbnails })
+        let newProduct = await req.productsManager.create({ title, description, code, price, status, stock, category, thumbnails })
         res.setHeader('Content-Type', 'application/json')
         return res.status(201).json({ Message: `Producto con code ${code} creado correctamente`, newProduct })
     } catch (error) {
@@ -116,7 +112,7 @@ productsRouter.put('/:pid', async (req, res) => {
             return res.status(400).json({ error: 'El campo id no puede ser modificado' })
         }
 
-        let updatedProduct = await ProductsManager.update(pid, updates)
+        let updatedProduct = await req.productsManager.update(pid, updates)
 
         res.setHeader('Content-Type', 'application/json')
         return res.status(200).json({ message: `Producto con id ${pid} modificado correctamente`, product: updatedProduct })
@@ -141,7 +137,7 @@ productsRouter.delete('/:pid', async (req, res) => {
             return res.status(400).json({ error: 'El id debe ser numérico' });
         }
 
-        let resultado = await ProductsManager.delete(pid);
+        let resultado = await req.productsManager.delete(pid);
         res.setHeader('Content-Type', 'application/json');
         return res.status(200).json(resultado);
     } catch (error) {

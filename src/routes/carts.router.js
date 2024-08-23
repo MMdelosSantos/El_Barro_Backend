@@ -60,7 +60,7 @@ cartsRouter.post('/:cid/product/:pid', async (req, res) => { // Agrega un produc
                 error: `No existe carrito con id ${cid}`
             });
         }
-        let products = await ProductsManager.getProducts()
+        let products = await req.productsManager.getProducts()
         let existe = products.find(p => p.id === pid)
         if (!existe) {
             res.setHeader('Content-Type', 'application/json')

@@ -1,4 +1,23 @@
 <h1>Cerámicas El Barro PERO CON WEBSOCKET</h1>
-<div id="products"></div>
+<ul id="products"></ul>
 <script src="/socket.io/socket.io.js"></script>
-<script src="/js/index.js"></script>
+<script src="/js/index.js"></script>;
+
+<script>
+    const serverSocket = io();
+
+    function updateProductList(products) {
+        const productsList = document.getElementById('products');
+        productsList.innerHTML = '';
+        products.forEach(product => {
+            const li = document.createElement('li');
+            li.textContent = ` Id: ${product.id} - Code: ${product.code} - Title: ${product.title}`;
+            productsList.appendChild(li);
+        });
+    }
+    console.log("termine ws")
+
+    // Escuchar actualizaciones de productos del servidor
+    serverSocket.on('updateProducts', updateProductList);
+
+</script>
