@@ -1,9 +1,12 @@
 const fs = require("fs")
 
 class ProductsManager {
-    static path
+    constructor(io) {
+        this.io = io;
+        this.path = './src/data/products.json';
+    }
 
-    static async getProducts() {
+    async getProducts() {
         if (fs.existsSync(this.path)) {
             return JSON.parse(await fs.promises.readFile(this.path, { encoding: "utf-8" }))
         } else {
@@ -11,19 +14,20 @@ class ProductsManager {
         }
     }
 
-    static async create(product = {}) { // Método para crear un nuevo producto
+    async create(product = {}) { // Método para crear un nuevo producto
 
 
-        const { title, description, code, price, status= true, stock, category } = product;
+        const { title, description, code, price, status = true, stock, category } = product;
         if (!title || !description || !code || !price || !stock || !category) {
-            throw new Error("Los campos title, description, code, category,stock y price son obligatorios")}
+            throw new Error("Los campos title, description, code, category,stock y price son obligatorios")
+        }
 
         if (typeof title !== "string" || typeof description !== "string" || typeof code !== "string" || typeof category !== "string") {
             throw new Error("El title, description, category y code deben estar en formato string")
         }
         if (typeof price !== "number" || typeof stock !== "number") {
             throw new Error("El price y el stock deben estar en formato number")
-        }        
+        }
         if (price < 0 || stock <= 0) {
             throw new Error("El price debe ser mayor a 0 y el stock debe ser igual o mayor a 0")
         }
@@ -49,11 +53,17 @@ class ProductsManager {
 
         products.push(newProduct)
         await fs.promises.writeFile(this.path, JSON.stringify(products, null, 5))
+
+        // Emitir el evento de producto actualizado
+        console.log("probando io")
+        this.io.emit('updateProducts', products);
+
+
         return newProduct
     }
 
 
-    static async update(id, updates) { // Método para modificar un producto ya existente
+    async update(id, updates) { // Método para modificar un producto ya existente
         let products = await this.getProducts()
         let productIndex = products.findIndex(p => p.id === id)
 
@@ -108,10 +118,16 @@ class ProductsManager {
 
         products[productIndex] = product
         await fs.promises.writeFile(this.path, JSON.stringify(products, null, 5))
+
+        // Emitir el evento de producto actualizado
+        if (this.io) {
+            this.io.emit('updateProducts', products);
+        }
+
         return product
     }
 
-    static async delete(id) { //Método para borrar un producto
+    async delete(id) { //Método para borrar un producto
         let products = await this.getProducts();
         let productIndex = products.findIndex(p => p.id === id);
 
@@ -121,6 +137,12 @@ class ProductsManager {
 
         products.splice(productIndex, 1);
         await fs.promises.writeFile(this.path, JSON.stringify(products, null, 5));
+
+        // Emitir el evento de producto actualizado
+        if (this.io) {
+            this.io.emit('updateProducts', products);
+        }
+
         return { message: `Producto con id ${id} eliminado correctamente` };
     }
 

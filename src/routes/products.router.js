@@ -1,14 +1,17 @@
 const { Router } = require('express');
 
 // Importo products
-const ProductsManager = require("../dao/ProductsManager.js")
+//const ProductsManager = require("../dao/ProductsManager.js")
 
 const productsRouter = Router()
-
+productsRouter.use((req, res, next) => {
+    req.productsManager = productsManager; 
+    next();
+});
 // Get en ruta raiz
 productsRouter.get('/', async (req, res) => {
     try {
-        let products = await ProductsManager.getProducts()
+        let products = await req.productsManager.getProducts()
 
         let { limit, skip } = req.query
         if (limit) {
