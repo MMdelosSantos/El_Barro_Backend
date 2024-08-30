@@ -9,7 +9,7 @@
           "price": 160,
           "stock": 5,
           "thumbnails": [
-               "./public/imagenes/producto_1.png"
+               "../public/imagenes/producto_1.png"
           ]
      },
      {
@@ -22,7 +22,7 @@
           "price": 200,
           "stock": 4,
           "thumbnails": [
-               "./public/imagenes/producto_2.png"
+               "../public/imagenes/producto_2.png"
           ]
      },
      {
@@ -35,7 +35,7 @@
           "price": 1300,
           "stock": 7,
           "thumbnails": [
-               "./public/imagenes/producto_3.jpg"
+               "../public/imagenes/producto_3.jpg"
           ]
      },
      {
@@ -48,7 +48,7 @@
           "price": 250,
           "stock": 10,
           "thumbnails": [
-               "./public/imagenes/producto_4.png"
+               "../public/imagenes/producto_4.png"
           ]
      },
      {
@@ -61,7 +61,7 @@
           "price": 300,
           "stock": 5,
           "thumbnails": [
-               "./public/imagenes/producto_5.png"
+               "../public/imagenes/producto_5.png"
           ]
      },
      {
@@ -74,7 +74,7 @@
           "price": 480,
           "stock": 13,
           "thumbnails": [
-               "./public/imagenes/producto_6.png"
+               "../public/imagenes/producto_6.png"
           ]
      },
      {
@@ -87,7 +87,7 @@
           "price": 2500,
           "stock": 2,
           "thumbnails": [
-               "./public/imagenes/producto_7.png"
+               "../public/imagenes/producto_7.png"
           ]
      },
      {
@@ -100,7 +100,7 @@
           "price": 150,
           "stock": 15,
           "thumbnails": [
-               "./public/imagenes/producto_8.png"
+               "../public/imagenes/producto_8.png"
           ]
      },
      {
@@ -113,7 +113,7 @@
           "price": 2500,
           "stock": 7,
           "thumbnails": [
-               "./public/imagenes/producto_9.png"
+               "../public/imagenes/producto_9.png"
           ]
      },
      {
@@ -126,7 +126,7 @@
           "price": 150,
           "stock": 1,
           "thumbnails": [
-               "./public/imagenes/producto_10.png"
+               "../public/imagenes/producto_10.png"
           ]
      },
      {
@@ -139,7 +139,7 @@
           "price": 350,
           "stock": 9,
           "thumbnails": [
-               "./public/imagenes/producto_11.jpg"
+               "../public/imagenes/producto_11.jpg"
           ]
      },
      {
@@ -152,7 +152,7 @@
           "price": 800,
           "stock": 2,
           "thumbnails": [
-               "./public/imagenes/producto_12.png"
+               "../public/imagenes/producto_12.png"
           ]
      },
      {
@@ -165,7 +165,7 @@
           "price": 300,
           "stock": 15,
           "thumbnails": [
-               "./public/imagenes/producto_13.png"
+               "../public/imagenes/producto_13.png"
           ]
      },
      {
@@ -178,7 +178,7 @@
           "price": 870,
           "stock": 6,
           "thumbnails": [
-               "./public/imagenes/producto_14.png"
+               "../public/imagenes/producto_14.png"
           ]
      },
      {
@@ -191,7 +191,7 @@
           "price": 1500,
           "stock": 4,
           "thumbnails": [
-               "./public/imagenes/producto_15.jpg"
+               "../public/imagenes/producto_15.jpg"
           ]
      },
      {
@@ -204,7 +204,7 @@
           "price": 500,
           "stock": 3,
           "thumbnails": [
-               "./public/imagenes/producto_16.jpg"
+               "../public/imagenes/producto_16.jpg"
           ]
      },
      {
@@ -217,7 +217,7 @@
           "price": 620,
           "stock": 1,
           "thumbnails": [
-               "./public/imagenes/producto_17.png"
+               "../public/imagenes/producto_17.png"
           ]
      },
      {
@@ -230,7 +230,7 @@
           "price": 780,
           "stock": 3,
           "thumbnails": [
-               "./public/imagenes/producto_18.png"
+               "../public/imagenes/producto_18.png"
           ]
      },
      {
@@ -243,7 +243,7 @@
           "price": 1350,
           "stock": 1,
           "thumbnails": [
-               "./public/imagenes/producto_19.png"
+               "../public/imagenes/producto_19.png"
           ]
      },
      {
@@ -256,7 +256,7 @@
           "price": 1500,
           "stock": 4,
           "thumbnails": [
-               "./public/imagenes/producto_20.png"
+               "../public/imagenes/producto_20.png"
           ]
      },
      {
@@ -269,7 +269,7 @@
           "price": 300,
           "stock": 10,
           "thumbnails": [
-               "./public/imagenes/producto_21.png"
+               "../public/imagenes/producto_21.png"
           ]
      },
      {
@@ -282,7 +282,7 @@
           "price": 200,
           "stock": 8,
           "thumbnails": [
-               "./public/imagenes/producto_22.png"
+               "../public/imagenes/producto_22.png"
           ]
      },
      {
@@ -295,7 +295,7 @@
           "price": 250,
           "stock": 6,
           "thumbnails": [
-               "./public/imagenes/producto_23.png"
+               "../public/imagenes/producto_23.png"
           ]
      },
      {
@@ -308,7 +308,7 @@
           "price": 220,
           "stock": 9,
           "thumbnails": [
-               "./public/imagenes/producto_24.png"
+               "../public/imagenes/producto_24.png"
           ]
      },
      {
@@ -321,7 +321,7 @@
           "price": 1300,
           "stock": 5,
           "thumbnails": [
-               "./public/imagenes/producto_25.png"
+               "../public/imagenes/producto_25.png"
           ]
      },
      {
@@ -334,7 +334,7 @@
           "price": 180,
           "stock": 12,
           "thumbnails": [
-               "./public/imagenes/producto_26.png"
+               "../public/imagenes/producto_26.png"
           ]
      },
      {
@@ -347,7 +347,7 @@
           "price": 210,
           "stock": 7,
           "thumbnails": [
-               "./public/imagenes/producto_27.png"
+               "../public/imagenes/producto_27.png"
           ]
      },
      {
@@ -360,7 +360,7 @@
           "price": 350,
           "stock": 4,
           "thumbnails": [
-               "./public/imagenes/producto_28.png"
+               "../public/imagenes/producto_28.png"
           ]
      },
      {
@@ -373,7 +373,7 @@
           "price": 230,
           "stock": 11,
           "thumbnails": [
-               "./public/imagenes/producto_29.png"
+               "../public/imagenes/producto_29.png"
           ]
      },
      {
@@ -386,7 +386,7 @@
           "price": 270,
           "stock": 8,
           "thumbnails": [
-               "./public/imagenes/producto_30.png"
+               "../public/imagenes/producto_30.png"
           ]
      },
      {
@@ -399,7 +399,7 @@
           "price": 900,
           "stock": 5,
           "thumbnails": [
-               "./public/imagenes/producto_31.png"
+               "../public/imagenes/producto_31.png"
           ]
      },
      {
@@ -412,7 +412,7 @@
           "price": 250,
           "stock": 9,
           "thumbnails": [
-               "./public/imagenes/producto_32.png"
+               "../public/imagenes/producto_32.png"
           ]
      },
      {
@@ -425,7 +425,7 @@
           "price": 240,
           "stock": 6,
           "thumbnails": [
-               "./public/imagenes/producto_33.png"
+               "../public/imagenes/producto_33.png"
           ]
      },
      {
@@ -438,7 +438,7 @@
           "price": 280,
           "stock": 10,
           "thumbnails": [
-               "./public/imagenes/producto_34.png"
+               "../public/imagenes/producto_34.png"
           ]
      },
      {
@@ -451,7 +451,7 @@
           "price": 260,
           "stock": 7,
           "thumbnails": [
-               "./public/imagenes/producto_35.png"
+               "../public/imagenes/producto_35.png"
           ]
      },
      {
@@ -464,7 +464,7 @@
           "price": 1100,
           "stock": 4,
           "thumbnails": [
-               "./public/imagenes/producto_36.png"
+               "../public/imagenes/producto_36.png"
           ]
      },
      {
@@ -477,7 +477,7 @@
           "price": 200,
           "stock": 12,
           "thumbnails": [
-               "./public/imagenes/producto_37.png"
+               "../public/imagenes/producto_37.png"
           ]
      },
      {
@@ -490,7 +490,7 @@
           "price": 290,
           "stock": 8,
           "thumbnails": [
-               "./public/imagenes/producto_38.png"
+               "../public/imagenes/producto_38.png"
           ]
      },
      {
@@ -503,7 +503,7 @@
           "price": 270,
           "stock": 11,
           "thumbnails": [
-               "./public/imagenes/producto_40.png"
+               "../public/imagenes/producto_40.png"
           ]
      }
 ]
