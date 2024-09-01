@@ -1,6 +1,7 @@
 const express = require('express');
 const { Server } = require('socket.io');
 const http = require('http');
+const connDB= require('./connDB.js')
 
 const productsRouter = require('./routes/products.router.js');
 const cartsRouter = require('./routes/carts.router.js');
@@ -66,3 +67,6 @@ io.on('connection', (socket) => {
         console.log('Cliente WebSocket desconectado');
     });
 });
+
+// Conexion con MongoDB
+connDB()
