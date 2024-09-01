@@ -54,7 +54,9 @@
         const category = document.getElementById('category').value;
         const stock = Number(document.getElementById('stock').value);
         const price = Number(document.getElementById('price').value);
-        serverSocket.emit('addProduct', { code, title, description, category, stock, price });
+        const status = true
+        const thumbnails =[]
+        serverSocket.emit('addProduct', { code,status, title, description, category, stock, price, thumbnails });
         document.getElementById('addProductForm').reset();
     });
 
