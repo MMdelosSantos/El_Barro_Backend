@@ -1,9 +1,10 @@
 const mongoose= require ('mongoose')
+const  config  = require('./config/configuraciones')
 
 const connDB= async()=>{
     try{
-        await mongoose.connect("mongodb+srv://comis70140:CoderCoder@cluster0.wjzuo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-            {dbName:"ElBarroCeramicas"}
+        await mongoose.connect(config.MONGO_URL,
+            {dbName:config.DB_NAME}
         )
         console.log(`Base de datos conectada`)
     }

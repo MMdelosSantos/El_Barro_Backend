@@ -1,42 +1,56 @@
+
+// Importaciones
 const express = require('express');
 const { Server } = require('socket.io');
 const http = require('http');
-const connDB= require('./connDB.js')
-
-const productsRouter = require('./routes/products.router.js');
+const connDB = require('./connDB.js')
+const configuraciones = require('./config/configuraciones.js')
 const cartsRouter = require('./routes/carts.router.js');
 const viewsRouter = require('./routes/views.router.js');
-
-const ProductsManager = require('./dao/ProductsManager.js');
 const CartsManager = require('./dao/CartsManager.js');
 CartsManager.path = "./src/data/carts.json";
+const productsRouterMongo = require('./routes/products.routerMongo.js');
+const ProductsManagerMongo = require('./dao/ProductsManagerMongo.js');
+
+// Configurando app
 
 const app = express();
-const PORT = 8080;
+const PORT = configuraciones.PORT;
 app.use(express.json());  // Para manejar datos en formato JSON
 app.use(express.urlencoded({ extended: true }));
 
+
+// Conexion con MongoDB
+connDB()
+
+
 // Configuración de Handlebars
 const { engine } = require('express-handlebars');
+const { config } = require('process');
+
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
-app.set("views","./src/views");
+app.set("views", "./src/views");
 
 // Configuración del servidor HTTP y WebSocket
 const serverHTTP = app.listen(PORT, () => console.log(`Escuchando en puerto ${PORT}`));
 const io = new Server(serverHTTP);
 
 // Creación de la instancia de ProductsManager
-const productsManager = new ProductsManager(io);
+const productsManager = new ProductsManagerMongo(io);
 
 // Middleware global para asignar productsManager a req
 app.use((req, res, next) => {
-    req.productsManager = productsManager;
+    req.ProductsManagerMongo = new ProductsManagerMongo ();
     next();
 });
 
 // Configuración de rutas
-app.use("/api/products", productsRouter);
+// con MongoDB
+app.use("/api/products", productsRouterMongo)
+// Anterior ruta con FS
+//app.use("/api/products", productsRouter);
+
 app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 
@@ -52,13 +66,13 @@ io.on('connection', (socket) => {
     });
 
     socket.on('addProduct', async (product) => {
-        await productsManager.create(product);
+        await productsManager.createProduct(product);
         const products = await productsManager.getProducts();
         io.emit('updateProducts', products);
     });
 
     socket.on('deleteProduct', async (id) => {
-        await productsManager.delete(id);
+        await productsManager.deleteProduct(id);
         const products = await productsManager.getProducts();
         io.emit('updateProducts', products);
     });
@@ -68,5 +82,4 @@ io.on('connection', (socket) => {
     });
 });
 
-// Conexion con MongoDB
-connDB()
+
