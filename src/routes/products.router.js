@@ -72,7 +72,7 @@ productsRouter.get('/:pid', async (req, res) => {
 
 // Método para crear un producto nuevo
 productsRouter.post('/', async (req, res) => {
-    let { title, description, code, price, status=true, stock, category, thumbnails } = req.body
+    let { title, description, code, price, status = true, stock, category, thumbnails } = req.body
 
     if (!title || !description || !code || !price || !stock || !category) {
         res.setHeader('Content-Type', 'application/json')

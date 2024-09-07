@@ -53,7 +53,6 @@ class ProductsManager {
         await fs.promises.writeFile(this.path, JSON.stringify(products, null, 5))
 
         // Emitir el evento de producto actualizado
-        console.log("probando io")
         this.io.emit('updateProducts', products);
 
 
