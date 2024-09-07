@@ -37,7 +37,7 @@
         productsList.innerHTML = '';
         products.forEach(product => {
             const li = document.createElement('li');
-            li.textContent = ` Id: ${product.id} - Code: ${product.code} - Title: ${product.title}`;
+            li.textContent = ` Id: ${product._id} - Code: ${product.code} - Title: ${product.title}`;
             productsList.appendChild(li);
         });
     }
@@ -55,15 +55,16 @@
         const stock = Number(document.getElementById('stock').value);
         const price = Number(document.getElementById('price').value);
         const status = true
-        const thumbnails =[]
-        serverSocket.emit('addProduct', { code,status, title, description, category, stock, price, thumbnails });
+        const thumbnails = []
+        serverSocket.emit('addProduct', { code, status, title, description, category, stock, price, thumbnails });
         document.getElementById('addProductForm').reset();
     });
+
 
     // Actualizacion del listado al usar formulario de eliminar un producto
     document.getElementById('deleteProductForm').addEventListener('submit', (event) => {
         event.preventDefault();
-        const id = Number(document.getElementById('id').value);
+        const id = document.getElementById('id').value.trim();
         serverSocket.emit('deleteProduct', id);
         document.getElementById('deleteProductForm').reset();
     });

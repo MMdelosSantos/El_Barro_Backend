@@ -1,7 +1,8 @@
 const { Router } = require('express');
 const ProductsManagerMongo = require('../dao/ProductsManagerMongo');
 const { isValidObjectId } = require('mongoose');
-const productsRouterMongo = Router()
+const productsRouterMongo = Router();
+
 
 const productsManager = new ProductsManagerMongo();
 
@@ -56,7 +57,6 @@ productsRouterMongo.get('/:pid', async (req, res) => {
         let products = await productsManager.getProducts()
 
         let product = await productsManager.getProductBy({ _id: pid })
-        console.log(product)
         if (!product) {
             res.setHeader('Content-Type', 'application/json')
             return res.status(400).json({ error: `No se encontró producto con el id ${pid}` })
@@ -163,7 +163,7 @@ productsRouterMongo.put('/:pid', async (req, res) => {
             }
         }
 
-        let updatedProduct = await ProductsModel.updateProduct(pid, updates)
+        let updatedProduct = await productsManager.updateProduct(pid, updates)
         if (!updatedProduct) {
             res.setHeader('Content-Type', 'application/json')
             return res.status(400).json({ error: 'No se ha podido modificar el product' })
@@ -185,16 +185,19 @@ productsRouterMongo.put('/:pid', async (req, res) => {
 productsRouterMongo.delete('/:pid', async (req, res) => {
     try {
         let { pid } = req.params;
-        pid = Number(pid);
 
         if (!isValidObjectId(pid)) {
             res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({ error: `El id ${pid} es inválido` });
         }
-
         let resultado = await productsManager.deleteProduct(pid);
+
+        if (!resultado) {
+            return res.status(404).json({ error: `No se encontró un producto con el id ${pid}` });
+        }
+
         res.setHeader('Content-Type', 'application/json');
-        return res.status(200).json(resultado);
+        return res.status(200).json({ message: `Producto con id ${pid} eliminado correctamente` })
     } catch (error) {
         console.log(error);
         res.setHeader('Content-Type', 'application/json');

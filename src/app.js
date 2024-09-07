@@ -5,10 +5,8 @@ const { Server } = require('socket.io');
 const http = require('http');
 const connDB = require('./connDB.js')
 const configuraciones = require('./config/configuraciones.js')
-const cartsRouter = require('./routes/carts.router.js');
+const cartsRouterMongo = require('./routes/carts.routerMongo.js');
 const viewsRouter = require('./routes/views.router.js');
-const CartsManager = require('./dao/CartsManager.js');
-CartsManager.path = "./src/data/carts.json";
 const productsRouterMongo = require('./routes/products.routerMongo.js');
 const ProductsManagerMongo = require('./dao/ProductsManagerMongo.js');
 
@@ -41,7 +39,7 @@ const productsManager = new ProductsManagerMongo(io);
 
 // Middleware global para asignar productsManager a req
 app.use((req, res, next) => {
-    req.ProductsManagerMongo = new ProductsManagerMongo ();
+    req.ProductsManagerMongo = new ProductsManagerMongo();
     next();
 });
 
@@ -51,7 +49,7 @@ app.use("/api/products", productsRouterMongo)
 // Anterior ruta con FS
 //app.use("/api/products", productsRouter);
 
-app.use("/api/carts", cartsRouter);
+app.use("/api/carts", cartsRouterMongo);
 app.use("/", viewsRouter);
 
 // Contenido estático
