@@ -2,7 +2,6 @@
 const CartsModel = require('./models/CartsModel.js')
 const mongoose = require('mongoose');
 
-
 class CartsManagerMongo {
 
     async getCarts() {  // Método para mostrar carritos
@@ -17,7 +16,8 @@ class CartsManagerMongo {
         if (!mongoose.Types.ObjectId.isValid(id)) {
             throw new Error('ID inválido');
         }
-        return await this.getCartBy({ _id: id });
+        return await CartsModel.findById(id)
+            .populate('products.product')
     }
 
     async createCart(cart) {  // Método para generar un carrito nuevo
@@ -25,11 +25,11 @@ class CartsManagerMongo {
         return newCart.toJSON()
     }
 
-    async updateCart(id, cart = {}) { // Método para incorporar un producto a un carrito 
+    async updateCart(id, update) { // Método para actualizar parcialmente un carrito
         if (!mongoose.Types.ObjectId.isValid(id)) {
             throw new Error('ID inválido');
         }
-        return await CartsModel.findByIdAndUpdate(id, cart, { new: true }).lean();
+        return await CartsModel.findByIdAndUpdate(id, update, { new: true, runValidators: true })
     }
 }
 
