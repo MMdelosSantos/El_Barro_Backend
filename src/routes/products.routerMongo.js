@@ -19,7 +19,7 @@ productsRouterMongo.get('/', async (req, res) => {
                 return res.status(400).json({ error: `El argumento limit debe ser de tipo número` })
             }
         } else {
-            limit = products.length
+            limit = 10
         }
 
         if (skip) {
@@ -30,6 +30,27 @@ productsRouterMongo.get('/', async (req, res) => {
             }
         } else {
             skip = 0
+        }
+        if (query) {
+            const queryObj = JSON.parse(query);
+            products = products.filter(product => {
+                return Object.keys(queryObj).every(key => {
+                    return String(product[key]).toLowerCase().includes(String(queryObj[key]).toLowerCase());
+                });
+            });
+        }
+
+        if (sort) {
+            if (sort !== 'asc' && sort !== 'desc') {
+                return res.status(400).json({ error: `El argumento sort debe ser 'asc' o 'desc'` });
+            }
+            products.sort((a, b) => {
+                if (sort === 'asc') {
+                    return a.price - b.price;
+                } else {
+                    return b.price - a.price;
+                }
+            });
         }
 
         let resultado = products.slice(skip, skip + limit)

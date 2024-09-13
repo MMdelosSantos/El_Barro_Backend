@@ -32,7 +32,18 @@ cartsRouterMongo.get('/:cid', async (req, res) => { // Método para mostrar un c
         }
 
         let cart = await cartsManager.getCartById(cid);
-        res.status(200).json(cart);
+        if (!cart) {
+            res.setHeader('Content-Type', 'application/json');
+            return res.status(404).json({ error: `No existe carrito con id ${cid}` });
+        }
+        let products = cart.products; 
+
+        res.setHeader('Content-Type', 'application/json'); 
+                return res.status(200).json({
+            message: `Carrito con id ${cid} encontrado.`,
+            cartId: cid,
+            products: products
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({
@@ -53,7 +64,7 @@ cartsRouterMongo.post('/:cid/product/:pid', async (req, res) => { // Agrega un p
         res.setHeader('Content-Type', 'application/json')
         return res.status(400).json({ error: `El id ${pid} de product es inválido` })
     }
-    try { 
+    try {
         let cart = await cartsManager.getCartById(cid);
         if (!cart) {
             res.setHeader('Content-Type', 'application/json');
@@ -75,14 +86,59 @@ cartsRouterMongo.post('/:cid/product/:pid', async (req, res) => { // Agrega un p
         if (cartProduct) {
             cartProduct.quantity += 1;
         } else {
-            cart.products.push({ id: pid, quantity: 1 });
+            cart.products.push({ product: pid, quantity: 1 });
         }
 
-        await cartsManager.updateCart(cid, cart); 
+        await cartsManager.updateCart(cid, cart);
 
         res.setHeader('Content-Type', 'application/json');
         return res.status(200).json({
             message: `Producto con id ${pid} añadido al carrito ${cid}.`,
+            cart: cart
+        });
+    } catch (error) {
+        console.error('Error al añadir producto al carrito:', error);
+        return res.status(500).json({
+            Error: 'Error inesperado en el servidor. Por favor intente más tarde',
+            detalle: error.message
+        });
+    }
+});
+
+cartsRouterMongo.delete('/:cid/products/:pid', async (req, res) => { // Método para borrar un producto de un carrito
+    let { cid, pid } = req.params;
+
+    if (!isValidObjectId(cid)) {
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(400).json({ error: `El id ${cid} de carrito es inválido` });
+    }
+    if (!isValidObjectId(pid)) {
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(400).json({ error: `El id ${pid} de producto es inválido` });
+    }
+
+    try {
+        let cart = await cartsManager.getCartById(cid);
+        if (!cart) {
+            res.setHeader('Content-Type', 'application/json');
+            return res.status(400).json({ error: `No existe carrito con id ${cid}` });
+        }
+
+
+        let productIndex = cart.products.findIndex(p => p.id.toString() === pid);
+
+        if (productIndex === -1) {
+            res.setHeader('Content-Type', 'application/json');
+            return res.status(400).json({ error: `No existe el producto con id ${pid} en el carrito ${cid}` });
+        }
+
+        cart.products.splice(productIndex, 1);
+
+        await cartsManager.updateCart(cid, { products: cart.products })
+
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(200).json({
+            message: `Producto con id ${pid} eliminado del carrito ${cid}.`,
             cart: cart
         });
     } catch (error) {
@@ -95,5 +151,88 @@ cartsRouterMongo.post('/:cid/product/:pid', async (req, res) => { // Agrega un p
     }
 });
 
+cartsRouterMongo.put('/:cid/products/:pid', async (req, res) => { // Actualiza la cantidad de un producto en un carrito segun lo establecido en req.body
+    let { cid, pid } = req.params;
+    let { quantity } = req.body;
+
+    if (!isValidObjectId(cid)) {
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(400).json({ error: `El id ${cid} de carrito es inválido` });
+    }
+    if (!isValidObjectId(pid)) {
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(400).json({ error: `El id ${pid} de producto es inválido` });
+    }
+    if (typeof quantity !== 'number' || quantity < 0) {
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(400).json({ error: 'La cantidad debe ser un número positivo' });
+    }
+
+    try {
+        let cart = await cartsManager.getCartById(cid);
+        if (!cart) {
+            res.setHeader('Content-Type', 'application/json');
+            return res.status(400).json({ error: `No existe carrito con id ${cid}` });
+        }
+
+        let cartProduct = cart.products.find(p => p.id.toString() === pid);
+
+        if (!cartProduct) {
+            res.setHeader('Content-Type', 'application/json');
+            return res.status(400).json({ error: `No existe el producto con id ${pid} en el carrito ${cid}` });
+        }
+
+        cartProduct.quantity = quantity;
+
+        await cartsManager.updateCart(cid, { products: cart.products });
+
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(200).json({
+            message: `Cantidad del producto con id ${pid} actualizada en el carrito ${cid}.`,
+            cart: cart
+        });
+    } catch (error) {
+        console.error(error);
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(500).json({
+            Error: 'Error inesperado en el servidor. Por favor intente más tarde',
+            detalle: error.message
+        });
+    }
+});
+
+cartsRouterMongo.delete('/:cid', async (req, res) => { // Elimina todos los productos del carrito
+    let { cid } = req.params;
+
+    if (!isValidObjectId(cid)) {
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(400).json({ error: `El id ${cid} de carrito es inválido` });
+    }
+
+    try {
+        let cart = await cartsManager.getCartById(cid);
+        if (!cart) {
+            res.setHeader('Content-Type', 'application/json');
+            return res.status(404).json({ error: `No existe carrito con id ${cid}` });
+        }
+
+        cart.products = [];
+
+        await cartsManager.updateCart(cid, { products: cart.products });
+
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(200).json({
+            message: `Todos los productos han sido eliminados del carrito ${cid}.`,
+            cart: cart
+        });
+    } catch (error) {
+        console.error(error);
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(500).json({
+            Error: 'Error inesperado en el servidor. Por favor intente más tarde',
+            detalle: error.message
+        });
+    }
+});
 module.exports = cartsRouterMongo;
 

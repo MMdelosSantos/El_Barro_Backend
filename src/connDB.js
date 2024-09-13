@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
 const config = require('./config/configuraciones')
 
+
 const connDB = async () => {
+
     try {
         await mongoose.connect(config.MONGO_URL,
             { dbName: config.DB_NAME }
