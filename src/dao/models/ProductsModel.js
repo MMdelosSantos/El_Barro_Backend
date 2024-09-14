@@ -1,6 +1,30 @@
 const mongoose = require('mongoose');
-const CartsModel = require('./CartsModel.js')
+const paginate = require('mongoose-paginate-v2')
 
+const productSchema = new mongoose.Schema(
+    {
+        code: String,
+        title: String,
+        description: String,
+        category: String,
+        price: Number,
+        status: Boolean,
+        stock: Number,
+        thumbnails: [String] 
+    },
+    {
+        timestamps: true,
+    }
+);
+
+
+productSchema.plugin(paginate);
+
+
+const ProductsModel = mongoose.model('products', productSchema);
+
+
+/*
 const ProductsModel= mongoose.model(
     "products",
     new mongoose.Schema(
@@ -20,19 +44,8 @@ const ProductsModel= mongoose.model(
     )
 )
 
-
-const CartsSchema= new mongoose.Schema(
-    {products: {
-        type: [
-            { product:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref:"products"
-            }}
-        ]
-    }
-}
-)
-
+ProductsModel.plugin(paginate)
+*/
 
 /*const productsSchema = new mongoose.Schema(
     {

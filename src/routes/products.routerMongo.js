@@ -9,9 +9,72 @@ const productsManager = new ProductsManagerMongo();
 // Get en ruta raiz
 productsRouterMongo.get('/', async (req, res) => {
     try {
-        let products = await productsManager.getProducts()
+        let { limit = 10, skip = 0, query, sort, page = 1 } = req.query;
+        limit = Number(limit);
+        skip = Number(skip);
+        page = Number(page);
 
-        let { limit, skip } = req.query
+        if (isNaN(limit) || limit <= 0) {
+            return res.status(400).json({ error: 'El argumento limit debe ser un número positivo' });
+        }
+
+        if (isNaN(skip) || skip < 0) {
+            return res.status(400).json({ error: 'El argumento skip debe ser un número no negativo' });
+        }
+
+        if (isNaN(page) || page <= 0) {
+            return res.status(400).json({ error: 'El argumento page debe ser un número positivo' });
+        }
+
+        let products;
+        if (skip > 0) {
+            products = await productsManager.getProducts();
+            products = products.slice(skip, skip + limit);
+        } else {
+            let productsPage = await productsManager.getProductsPaginate(page, limit);
+            products = productsPage.docs;
+        }
+
+
+        // Filtrar productos basado en el query
+        if (query) {
+            try {
+                const queryObj = JSON.parse(query);
+                products = products.filter(product => {
+                    return Object.keys(queryObj).every(key => {
+                        return String(product[key]).toLowerCase().includes(String(queryObj[key]).toLowerCase());
+                    });
+                });
+            } catch (error) {
+                return res.status(400).json({ error: 'El argumento query debe ser una cadena JSON válida' });
+            }
+        }
+
+        // Ordenar productos basado en el argumento sort
+        if (sort) {
+            if (sort !== 'asc' && sort !== 'desc') {
+                return res.status(400).json({ error: "El argumento sort debe ser 'asc' o 'desc'" });
+            }
+            products.sort((a, b) => {
+                return sort === 'asc' ? a.price - b.price : b.price - a.price;
+            });
+        }
+
+        res.json(products);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            error: 'Error inesperado en el servidor. Por favor intente más tarde',
+            detalle: error.message
+        });
+    }
+});
+/*
+productsRouterMongo.get('/', async (req, res) => {
+    try {
+        let products = await productsManager.getProductsPaginate()
+
+        let { limit, skip, query, sort, page } = req.query
         if (limit) {
             limit = Number(limit)
             if (isNaN(limit)) {
@@ -53,6 +116,16 @@ productsRouterMongo.get('/', async (req, res) => {
             });
         }
 
+        if (page) {
+            page = Number(page)
+            if (!page || isNaN(Number(page))) {
+                res.setHeader('Content-Type', 'application/json')
+                return res.status(400).json({ error: `El argumento page debe ser de tipo número` })
+            }
+        } else {
+            page = 1
+        }
+
         let resultado = products.slice(skip, skip + limit)
         res.setHeader('Content-Type', 'application/json')
         return res.status(200).json(resultado)
@@ -65,11 +138,12 @@ productsRouterMongo.get('/', async (req, res) => {
         })
     }
 });
+*/
 
 // Get en un producto con id especificO
 productsRouterMongo.get('/:pid', async (req, res) => {
     try {
-        let { pid } = req.params
+        const { pid } = req.params
         if (!isValidObjectId(pid)) {
             res.setHeader('Content-Type', 'application/json')
             return res.status(400).json({ error: `El id ${pid} es inválido` })
@@ -77,10 +151,10 @@ productsRouterMongo.get('/:pid', async (req, res) => {
 
         let products = await productsManager.getProducts()
 
-        let product = await productsManager.getProductBy({ _id: pid })
+        let product = await productsManager.getProductById(pid)
         if (!product) {
             res.setHeader('Content-Type', 'application/json')
-            return res.status(400).json({ error: `No se encontró producto con el id ${pid}` })
+            return res.status(404).json({ error: `No se encontró producto con el id ${pid}` })
         }
         res.setHeader('Content-Type', 'application/json')
         return res.status(200).json(product)

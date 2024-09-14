@@ -10,9 +10,15 @@ class ProductsManagerMongo {
         return await ProductsModel.find().lean()
     }
 
-    async getProductBy(filtro = {}) {  // Método para mostrar un producto por un filtro específico
+    async getProductsPaginate(page=1, limit=10) {  // Método para mostrar productos con paginación
+        return await ProductsModel.paginate({},{page, limit, lean:true})
+    }
+
+
+    /*async getProductBy(filtro = {}) {  // Método para mostrar un producto por un filtro específico
         return await ProductsModel.findOne(filtro).lean()
     }
+        */
 
     async getProductById(id) { // Método para mostrar un producto por id específico
         if (!mongoose.Types.ObjectId.isValid(id)) {

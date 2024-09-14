@@ -1,4 +1,4 @@
-class ProductsManager {
+/* class ProductsManager {
     constructor(io) {
         this.io = io;
         this.path = './src/data/products.json';
@@ -146,3 +146,4 @@ class ProductsManager {
 }
 
 module.exports = ProductsManager;
+*/
