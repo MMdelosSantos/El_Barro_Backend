@@ -1,4 +1,4 @@
-const { Router } = require('express');
+ /* const { Router } = require('express');
 const fs = require("fs")
 // Importo products
 const CartsManager = require("../dao/CartsManager.js");
@@ -98,3 +98,4 @@ cartsRouter.post('/:cid/product/:pid', async (req, res) => { // Agrega un produc
 
 module.exports = cartsRouter;
 
+*/

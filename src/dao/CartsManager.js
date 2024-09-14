@@ -1,4 +1,4 @@
-const fs = require("fs")
+/* const fs = require("fs")
 const { products } = require("../data/products")
 
 
@@ -60,3 +60,4 @@ class CartsManager {
 }
 
 module.exports = CartsManager;
+*/

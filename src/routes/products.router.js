@@ -1,4 +1,4 @@
-const { Router } = require('express');
+/*const { Router } = require('express');
 const productsRouter = Router()
 
 // Get en ruta raiz
@@ -152,4 +152,4 @@ productsRouter.delete('/:pid', async (req, res) => {
 
 module.exports = productsRouter;
 
-
+*/
