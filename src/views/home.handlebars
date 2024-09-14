@@ -1,7 +1,30 @@
 <h1>Cerámicas El Barro</h1>
 <h3>¡Bienvenidos!, este es el listado de nuestros productos:</h3>
 <ul>
-    {{#each products}}
-    <li>Id: {{_id}} Code: {{code}}, {{title}}</li>
+    {{#each payload.docs}}
+    <li>
+        <p>ID: {{_id}}</p>
+        <p>Code: {{code}}</p>
+        <p>Title: {{title}}</p>
+        <p>Description: {{description}}</p>
+        <p>Price: {{price}}</p>
+        <p>Category: {{category}}</p>
+        <p>Stock: {{stock}}</p>
+        <p>Status: {{status}}</p>
+    </li>
     {{/each}}
 </ul>
+
+{{#if payload.hasPrevPage}}
+<a href="http://localhost:8080/?page={{payload.prevPage}}">Página anterior</a>
+{{else}}
+<span>Prev</span>
+{{/if}}
+
+{{#if payload.hasNextPage}}
+<a href="http://localhost:8080/?page={{payload.nextPage}}">Página siguiente</a>
+{{else}}
+<span>Next</span>
+{{/if}}
+<a href="http://localhost:8080/">Primer Página</a>
+<a href="http://localhost:8080/?page={{payload.totalPages}}">Última página</a>

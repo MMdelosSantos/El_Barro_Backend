@@ -35,8 +35,6 @@ productsRouterMongo.get('/', async (req, res) => {
             products = productsPage.docs;
         }
 
-
-        // Filtrar productos basado en el query
         if (query) {
             try {
                 const queryObj = JSON.parse(query);
@@ -49,8 +47,7 @@ productsRouterMongo.get('/', async (req, res) => {
                 return res.status(400).json({ error: 'El argumento query debe ser una cadena JSON válida' });
             }
         }
-
-        // Ordenar productos basado en el argumento sort
+  
         if (sort) {
             if (sort !== 'asc' && sort !== 'desc') {
                 return res.status(400).json({ error: "El argumento sort debe ser 'asc' o 'desc'" });
@@ -60,7 +57,27 @@ productsRouterMongo.get('/', async (req, res) => {
             });
         }
 
-        res.json(products);
+        const productsPage = await productsManager.getProductsPaginate(page, limit);
+        
+        const totalPages = productsPage.totalPages;
+        const currentPage = productsPage.page;
+        const hasPrevPage = productsPage.prevPage !== null;
+        const hasNextPage = productsPage.nextPage !== null;
+        
+        const response = {
+            status: 'success',
+            payload: products,
+            totalPages: totalPages,
+            prevPage: productsPage.prevPage || null,
+            nextPage: productsPage.nextPage || null,
+            page: currentPage,
+            hasPrevPage: hasPrevPage,
+            hasNextPage: hasNextPage,
+            prevLink: hasPrevPage ? `http://localhost:8080/api/products?page=${productsPage.prevPage}&limit=${limit}` : null,
+            nextLink: hasNextPage ? `http://localhost:8080/api/products?page=${productsPage.nextPage}&limit=${limit}` : null
+        };
+
+        res.json(response);
     } catch (error) {
         console.error(error);
         return res.status(500).json({

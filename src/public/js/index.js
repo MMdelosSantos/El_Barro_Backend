@@ -2,7 +2,7 @@ const socket = io()
 const divProducts = document.getElementById("products")
 
 socket.on('Listado de productos actualizado', (products) => {
-    divProducts.innerHTML = "<h2>Listado de Productos:</h2>";
+    divProducts.innerHTML = "<h2>Listado de Productos: </h2>";
 
     products.forEach(product => {
         const productElement = document.createElement("div");

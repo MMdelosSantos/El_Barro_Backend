@@ -6,9 +6,13 @@ const CartsManagerMongo = require('../dao/CartsManagerMongo');
 const cartsManager = new CartsManagerMongo();
 
 viewsRouter.get("/", async (req, res) => {
-    const products = await req.ProductsManagerMongo.getProducts();
-    res.setHeader('Content-Type', 'text/html');
-    res.status(200).render("home", { products });
+    const page = Number(req.query.page) || 1; 
+    const limit = Number(req.query.limit) || 10; 
+    const products = await req.ProductsManagerMongo.getProductsPaginate(page,limit);
+        res.setHeader('Content-Type', 'text/html');
+    res.render('home', {
+            payload: products
+        });
 });
 
 viewsRouter.get("/realtimeproducts", async (req, res) => {

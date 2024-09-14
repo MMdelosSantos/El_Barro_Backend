@@ -15,11 +15,10 @@ class ProductsManagerMongo {
     }
 
 
-    /*async getProductBy(filtro = {}) {  // Método para mostrar un producto por un filtro específico
+    async getProductBy(filtro = {}) {  // Método para mostrar un producto por un filtro específico, ejemplo code
         return await ProductsModel.findOne(filtro).lean()
     }
-        */
-
+        
     async getProductById(id) { // Método para mostrar un producto por id específico
         if (!mongoose.Types.ObjectId.isValid(id)) {
             throw new Error('ID inválido');
