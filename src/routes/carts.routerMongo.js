@@ -105,6 +105,8 @@ cartsRouterMongo.post('/:cid/product/:pid', async (req, res) => { // Agrega un p
     }
 });
 
+
+
 cartsRouterMongo.delete('/:cid/products/:pid', async (req, res) => { // Método para borrar un producto de un carrito
     let { cid, pid } = req.params;
 
@@ -189,6 +191,53 @@ cartsRouterMongo.put('/:cid/products/:pid', async (req, res) => { // Actualiza l
         res.setHeader('Content-Type', 'application/json');
         return res.status(200).json({
             message: `Cantidad del producto con id ${pid} actualizada en el carrito ${cid}.`,
+            cart: cart
+        });
+    } catch (error) {
+        console.error(error);
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(500).json({
+            Error: 'Error inesperado en el servidor. Por favor intente más tarde',
+            detalle: error.message
+        });
+    }
+});
+
+cartsRouterMongo.put('/:cid', async (req, res) => { // Actualiza TODOS los productos del carrito
+    let { cid } = req.params;
+    let products  = req.body;
+
+    if (!isValidObjectId(cid)) {
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(400).json({ error: `El id ${cid} de carrito es inválido` });
+    }
+
+    if (!Array.isArray(products)|| products.length === 0) {
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(400).json({ error: 'El cuerpo de la solicitud debe contener un array de productos' });
+    }
+    for (let item of products) {
+        if (!item.product || typeof item.product.quantity !== 'number' || item.product.quantity < 0 || !item.product._id) {
+            return res.status(400).json({ error: 'Cada producto debe tener un campo "product" con un "quantity" no negativa y un "_id" válido' });
+        }
+    }
+
+    try {
+        let cart = await cartsManager.getCartById(cid);
+        if (!cart) {
+            res.setHeader('Content-Type', 'application/json');
+            return res.status(404).json({ error: `No existe carrito con id ${cid}` });
+        }
+        cart.products = products.map(item => ({
+            product: item.product._id,
+            quantity: item.product.quantity
+        }));
+
+        await cartsManager.updateCart(cid, { products: cart.products });
+
+        res.setHeader('Content-Type', 'application/json');
+        return res.status(200).json({
+            message: `Productos del carrito con id ${cid} actualizados.`,
             cart: cart
         });
     } catch (error) {
