@@ -25,6 +25,7 @@ viewsRouter.get("/carts/:cid", async (req, res) => {
     const { cid } = req.params;  
     try {
         const cart = await cartsManager.getCartById(cid);
+        console.log(cart);
         if (!cart) {
             return res.status(404).send("Carrito no encontrado.");
         }

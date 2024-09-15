@@ -64,6 +64,11 @@ cartsRouterMongo.post('/:cid/product/:pid', async (req, res) => { // Agrega un p
         res.setHeader('Content-Type', 'application/json')
         return res.status(400).json({ error: `El id ${pid} de product es inválido` })
     }
+
+    if (typeof quantity !== 'number' || quantity <= 0) {
+        return res.status(400).json({ error: 'La cantidad debe ser un número positivo' });
+    }
+    
     try {
         let cart = await cartsManager.getCartById(cid);
         if (!cart) {
@@ -81,7 +86,7 @@ cartsRouterMongo.post('/:cid/product/:pid', async (req, res) => { // Agrega un p
             });
         }
 
-        let cartProduct = cart.products.find(p => p.id.toString() === pid);
+        let cartProduct = cart.products.find(p => p._id.toString() === pid);
 
         if (cartProduct) {
             cartProduct.quantity += 1;
@@ -126,8 +131,8 @@ cartsRouterMongo.delete('/:cid/products/:pid', async (req, res) => { // Método 
             return res.status(400).json({ error: `No existe carrito con id ${cid}` });
         }
 
-
-        let productIndex = cart.products.findIndex(p => p.id.toString() === pid);
+console.log(cart.products)
+        let productIndex = cart.products.findIndex(p => p.product._id.toString() === pid);
 
         if (productIndex === -1) {
             res.setHeader('Content-Type', 'application/json');
@@ -165,7 +170,7 @@ cartsRouterMongo.put('/:cid/products/:pid', async (req, res) => { // Actualiza l
         res.setHeader('Content-Type', 'application/json');
         return res.status(400).json({ error: `El id ${pid} de producto es inválido` });
     }
-    if (typeof quantity !== 'number' || quantity < 0) {
+    if (typeof quantity !== 'number' || quantity <= 0) {
         res.setHeader('Content-Type', 'application/json');
         return res.status(400).json({ error: 'La cantidad debe ser un número positivo' });
     }
@@ -176,8 +181,8 @@ cartsRouterMongo.put('/:cid/products/:pid', async (req, res) => { // Actualiza l
             res.setHeader('Content-Type', 'application/json');
             return res.status(400).json({ error: `No existe carrito con id ${cid}` });
         }
-
-        let cartProduct = cart.products.find(p => p.id.toString() === pid);
+        console.log(cart.products)
+        let cartProduct = cart.products.find(p => p.product._id.toString() === pid);
 
         if (!cartProduct) {
             res.setHeader('Content-Type', 'application/json');
@@ -216,11 +221,6 @@ cartsRouterMongo.put('/:cid', async (req, res) => { // Actualiza TODOS los produ
         res.setHeader('Content-Type', 'application/json');
         return res.status(400).json({ error: 'El cuerpo de la solicitud debe contener un array de productos' });
     }
-    for (let item of products) {
-        if (!item.product || typeof item.product.quantity !== 'number' || item.product.quantity < 0 || !item.product._id) {
-            return res.status(400).json({ error: 'Cada producto debe tener un campo "product" con un "quantity" no negativa y un "_id" válido' });
-        }
-    }
 
     try {
         let cart = await cartsManager.getCartById(cid);
@@ -228,10 +228,15 @@ cartsRouterMongo.put('/:cid', async (req, res) => { // Actualiza TODOS los produ
             res.setHeader('Content-Type', 'application/json');
             return res.status(404).json({ error: `No existe carrito con id ${cid}` });
         }
-        cart.products = products.map(item => ({
-            product: item.product._id,
-            quantity: item.product.quantity
-        }));
+
+        for (let product of products) {
+            if (!product.product || typeof product.product.quantity !== 'number' || product.product.quantity < 0) {
+                return res.status(400).json({ error: 'Falta incorporar un product y la una cantidad no puede ser negativa' });
+            }
+        }
+
+        // Actualiza los productos del carrito
+        cart.products = products;
 
         await cartsManager.updateCart(cid, { products: cart.products });
 
