@@ -65,10 +65,6 @@ cartsRouterMongo.post('/:cid/product/:pid', async (req, res) => { // Agrega un p
         return res.status(400).json({ error: `El id ${pid} de product es inválido` })
     }
 
-    if (typeof quantity !== 'number' || quantity <= 0) {
-        return res.status(400).json({ error: 'La cantidad debe ser un número positivo' });
-    }
-    
     try {
         let cart = await cartsManager.getCartById(cid);
         if (!cart) {
@@ -86,7 +82,7 @@ cartsRouterMongo.post('/:cid/product/:pid', async (req, res) => { // Agrega un p
             });
         }
 
-        let cartProduct = cart.products.find(p => p._id.toString() === pid);
+        let cartProduct = cart.products.find(p => p.product._id.toString() === pid);
 
         if (cartProduct) {
             cartProduct.quantity += 1;
