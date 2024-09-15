@@ -9,6 +9,7 @@ const cartsRouterMongo = require('./routes/carts.routerMongo.js');
 const viewsRouter = require('./routes/views.router.js');
 const productsRouterMongo = require('./routes/products.routerMongo.js');
 const ProductsManagerMongo = require('./dao/ProductsManagerMongo.js');
+const exphbs = require('express-handlebars');
 
 // Configurando app
 
@@ -26,7 +27,12 @@ connDB()
 const { engine } = require('express-handlebars');
 const { config } = require('process');
 
-app.engine("handlebars", engine());
+app.engine('handlebars', engine({
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true
+    }
+}));
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 

@@ -17,7 +17,7 @@ class CartsManagerMongo {
             throw new Error('ID inválido');
         }
         return await CartsModel.findById(id)
-            .populate('products.product')
+            .populate('products.product').lean(); 
     }
 
     async createCart(cart) {  // Método para generar un carrito nuevo
@@ -25,7 +25,7 @@ class CartsManagerMongo {
         return newCart.toJSON()
     }
 
-    async updateCart(id, update) { // Método para actualizar parcialmente un carrito
+    async updateCart(id, update) { // Método para actualizar  un carrito
         if (!mongoose.Types.ObjectId.isValid(id)) {
             throw new Error('ID inválido');
         }
