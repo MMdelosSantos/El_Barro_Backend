@@ -11,6 +11,10 @@
         <p>Category: {{category}}</p>
         <p>Stock: {{stock}}</p>
         <p>Status: {{status}}</p>
+        <form class="product-form" data-product-id="{{_id}}">
+            <input type="hidden" name="productId" value="{{_id}}">
+            <button type="submit">Enviar</button>
+        </form>
     </li>
     {{/each}}
 </ul>
@@ -29,3 +33,33 @@
 <a href="http://localhost:8080/">Primer Página</a>
 <a href="http://localhost:8080/?page={{payload.totalPages}}">Última página</a>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Selecciona todos los formularios con la clase 'product-form'
+    const forms = document.querySelectorAll('.product-form');
+
+    forms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Previene el envío por defecto
+
+            const productId = this.dataset.productId;
+            const url = `http://localhost:8080/api/carts/66db7912adba29f9cea73f63/product/${productId}`;
+
+            // Crear una solicitud POST con fetch
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    });
+});
+</script>
